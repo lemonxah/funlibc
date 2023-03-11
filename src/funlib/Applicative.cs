@@ -2,7 +2,9 @@ namespace funlib {
     public interface Applicative<M> {
         HKT<A, M> Pure<A>(A a);
     }
-    public static class Applicative {
-        public static HKT<A, M> Pure<A, M>(this Applicative<M> applicative, A a) => applicative.Pure(a);
+
+    public interface Applicative2<M> {
+        HKT2<A, B, M> Pure<A, B>(A a);
     }
+
 }

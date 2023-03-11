@@ -1,21 +1,33 @@
 ﻿using funlib;
 namespace HelloWorld
 {
+    public enum Errors {
+        ParsingError,
+        NotEven,
+    }
+
+    public enum Errors2 {
+        SomeError,
+        SomeParsingError,
+    }
+
     class Program
     {
-        static void Main(string[] args)
-        {
-            var none = None._;
-            var some = 1.some();
-            var next = some.map(x => x + 1).bind(x => x.some());
-            Console.WriteLine($"option maps! {next}");
+        static Either<int, Errors> parse(string s) => int.TryParse(s, out var i) ? i.left<int, Errors>() : Errors.ParsingError.right<int, Errors>();
 
-            var list = 1.cons(2.cons(3.cons(4.cons(5.cons(Nil._)))));
-            var list2 = 6.cons(7.cons(8.cons(9.cons(10.cons(Nil._)))));
-            var list3 = list.append(list2);
-            Console.WriteLine($"list cons! {list3}");
-            var list4 = list3.map(x => x + 1);
-            Console.WriteLine($"list maps! {list4}");
+        static Either<int, Errors> add1(int x) => (x + 1).left<int, Errors>();
+
+        static Either<int, Errors> mul2(int x) => (x * 2).left<int, Errors>();
+
+        static Either<int, Errors> iseven(int x) => x % 2 == 0 ? x.left<int, Errors>() : Errors.NotEven.right<int, Errors>();
+
+        static Either<int, Errors> div2(int x) => (x / 2).left<int, Errors>();
+
+        static Either<int, Errors2> blah(int x) => (x * 2).left<int, Errors2>();
+
+        static int add2(int x) => x + 2;
+        static void Main(string[] args) {
+
         }
     }
 }
